@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BootCamp_MELI_W2.iml" filepath="$PROJECT_DIR$/BootCamp_MELI_W2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codigoMorce/codigoMorce.iml" filepath="$PROJECT_DIR$/codigoMorce/codigoMorce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-api/rest-api.iml" filepath="$PROJECT_DIR$/rest-api/rest-api.iml" />
     </modules>
   </component>
 </project>
