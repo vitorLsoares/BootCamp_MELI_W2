@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$/codigoMorce" />
-    <file type="web" url="file://$PROJECT_DIR$/rest-api" />
+    <file type="web" url="file://$PROJECT_DIR$/Spring/codigoMorce" />
+    <file type="web" url="file://$PROJECT_DIR$/Spring/rest-api" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
