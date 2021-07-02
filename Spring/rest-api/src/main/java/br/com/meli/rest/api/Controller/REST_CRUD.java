@@ -36,18 +36,18 @@ public class REST_CRUD {
             return new ResponseEntity<>(this.produtoService.createProduto(produto),HttpStatus.OK);
     }
 
-    @GetMapping(path="/{userId}")
+    @GetMapping(path="/{produtoId}")
     public ResponseEntity<Produto> getProduto(@PathVariable String produtoId){
         return new ResponseEntity<>(this.produtoService.getProduto(produtoId),HttpStatus.OK);
     }
 
-    @PutMapping(path="/{userId}")
+    @PutMapping(path="/{produtoId}")
     public ResponseEntity<Produto> updateProduto(@PathVariable String produtoId, @Validated @RequestBody Produto produto) {
 
         return new ResponseEntity<>(this.produtoService.updateProduto(produtoId, produto), HttpStatus.OK);
     }
 
-    @DeleteMapping(path="/{userId}")
+    @DeleteMapping(path="/{produtoId}")
     public ResponseEntity<Produto> deleteProduto(@PathVariable String produtoId) {
         this.produtoService.deleteProduto(produtoId);
         return ResponseEntity.noContent().build();
