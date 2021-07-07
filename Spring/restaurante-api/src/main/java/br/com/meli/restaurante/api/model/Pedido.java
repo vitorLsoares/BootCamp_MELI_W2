@@ -64,4 +64,6 @@ public class Pedido {
     public void setPratos(List<Prato> pratos) {
         this.pratos = pratos;
     }
+
+    public void setPrato(Prato prato){ this.pratos.add(prato); }
 }

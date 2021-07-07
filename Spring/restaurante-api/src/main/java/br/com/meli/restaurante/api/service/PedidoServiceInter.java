@@ -14,6 +14,5 @@ public interface PedidoServiceInter {
     Pedido getPedido(int idMesa);
     Pedido updatePedido(String pedidoId, Pedido prato);
     Pedido addorUpdatePrato(int mesaId, int idPrato, int quantidade);
-    void deletePedido(String pedidoId);
-
+    void setFechamento(int mesaId);
 }

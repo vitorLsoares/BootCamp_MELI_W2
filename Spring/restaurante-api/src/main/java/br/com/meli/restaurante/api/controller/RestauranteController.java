@@ -43,7 +43,7 @@ public class RestauranteController {
     }
 
     @PutMapping("/pedido/{idMesa}/{idPrato}/{quantidadePrato}")
-    public ResponseEntity<Pedido> addPrato(@Validated @RequestBody int idMesa,@Validated @RequestBody int idPrato ,@Validated @RequestBody int quantidadePrato , UriComponentsBuilder uriBuilder){
+    public ResponseEntity<Pedido> addPrato(@Validated @PathVariable int idMesa,@Validated @PathVariable int idPrato ,@Validated @PathVariable int quantidadePrato , UriComponentsBuilder uriBuilder){
 
         this.pedidoService.addorUpdatePrato(idMesa,idPrato,quantidadePrato);
         URI uri = uriBuilder.path("/pedido/{idMesa}").buildAndExpand(idMesa).toUri();
@@ -54,6 +54,11 @@ public class RestauranteController {
     public  ResponseEntity<Pedido> getPedidos(@PathVariable int idMesa){
         return new ResponseEntity<>(this.pedidoService.getPedido(idMesa), HttpStatus.OK);
     }
+
+//    @GetMapping("/pedido/fechamento/{idMesa}")
+//    public ResponseEntity<?> setFechamento(@PathVariable int idMesa){
+//        return new ResponseEntity<>(this.pedidoService.setFechamento(idMesa), HttpStatus.OK);
+//    }
 
 
 }

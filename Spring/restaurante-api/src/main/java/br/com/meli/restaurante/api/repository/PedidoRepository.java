@@ -7,6 +7,7 @@ import br.com.meli.restaurante.api.model.Prato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,20 +60,25 @@ public class PedidoRepository {
     }
 
     public Pedido addPrato(int idMesa , int idPrato, int quantidade){
-        List<Prato> pratosLocal;
+
+        Pedido pedidoLocal;
         Optional<Pedido> pedidoOptional = pedidos.stream().filter(m -> m.getMesa().getId() == idMesa ).findFirst();
-        pratosLocal = pedidoOptional.orElse(null).getPratos();
+        pedidoLocal = pedidoOptional.orElse(null);
 
-        Optional<Prato> pratoOptional = pratosLocal.stream().filter(p -> p.getId() == idPrato ).findFirst();
-        if (pratoOptional.isPresent()){
-            pratosLocal.stream().filter(p -> p.getId() == idPrato ).findFirst().get().setQuantidade(quantidade);
+        if ( pedidoLocal.getPratos().stream().anyMatch(id -> id.getId() == idPrato) ){
+            pedidoLocal.getPratos().stream().filter(id -> id.getId() == idPrato).findFirst().get().setQuantidade(quantidade);
         }
-        else {
-            pratosLocal.add(pratoRepository.updatePrato_quantidade(idPrato,quantidade));
+        else{
+            Prato pratoEscolhido = pratoRepository.getPrato(idPrato);
+            if (pratoEscolhido != null){
+                pratoEscolhido.setQuantidade(quantidade);
+                pedidoLocal.setPrato(pratoEscolhido);
+            }
         }
 
-        pedidoOptional.get().setPratos(pratosLocal);
-        return pedidoOptional.orElse(null);
+        pedidoLocal.setValorTotal(calcValorTotal(pedidoLocal.getPratos()));
+
+        return pedidoLocal;
     }
 
     public Pedido getPedido(String id){
@@ -83,6 +89,12 @@ public class PedidoRepository {
     public Pedido getPedido(int mesaId){
         Optional<Pedido> pedidoOptional = pedidos.stream().filter(m -> m.getMesa().getId() == mesaId ).findFirst();
         return pedidoOptional.orElse(null);
+    }
+
+    public static double calcValorTotal(List<Prato> pratos){
+        double valorTotal = pratos.stream().mapToDouble(prato -> prato.getQuantidade() * prato.getPreco()).sum();
+
+        return valorTotal;
     }
 
 //    public Pedido updatePedido(String pedidoId, Pedido pedido ){

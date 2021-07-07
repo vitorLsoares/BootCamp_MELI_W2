@@ -61,7 +61,7 @@ public class PedidoService implements PedidoServiceInter{
     }
 
     @Override
-    public void deletePedido(String pedidoId) {
+    public void setFechamento(int mesaId) {
 
     }
 }
