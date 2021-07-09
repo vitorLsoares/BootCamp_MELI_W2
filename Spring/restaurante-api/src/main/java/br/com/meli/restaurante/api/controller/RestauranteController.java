@@ -1,8 +1,8 @@
 package br.com.meli.restaurante.api.controller;
 
 import br.com.meli.restaurante.api.model.Mesa;
-import br.com.meli.restaurante.api.model.Pedido;
 import br.com.meli.restaurante.api.service.MesaService;
+import br.com.meli.restaurante.api.model.Pedido;
 import br.com.meli.restaurante.api.service.PedidoService;
 import br.com.meli.restaurante.api.service.PratoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedReader;
+import java.io.Reader;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 public class RestauranteController {
@@ -23,16 +28,6 @@ public class RestauranteController {
     private PedidoService pedidoService;
     @Autowired
     private PratoService pratoService;
-
-//    @GetMapping("/pedido/{idPedido}")
-//    public  ResponseEntity<Pedido> getPedidos(@PathVariable String idPedido){
-//        return new ResponseEntity<>(this.pedidoService.getPedido(idPedido), HttpStatus.OK);
-//    }
-
-//    @PostMapping("/pedido")
-//    public ResponseEntity<Pedido> createProduto(@Validated Pedido pedido){
-//        return new ResponseEntity<>(this.pedidoService.createPedido(pedido),HttpStatus.OK);
-//    }
 
     @PostMapping("/pedido")
     public ResponseEntity<Pedido> createProduto(@Validated @RequestBody Mesa mesa, UriComponentsBuilder uriBuilder){
@@ -55,10 +50,19 @@ public class RestauranteController {
         return new ResponseEntity<>(this.pedidoService.getPedido(idMesa), HttpStatus.OK);
     }
 
-//    @GetMapping("/pedido/fechamento/{idMesa}")
-//    public ResponseEntity<?> setFechamento(@PathVariable int idMesa){
-//        return new ResponseEntity<>(this.pedidoService.setFechamento(idMesa), HttpStatus.OK);
-//    }
+    @GetMapping("/pedido/list")
+    public ResponseEntity<List<Pedido>> getPedidosList(){
+        return new ResponseEntity<>(this.pedidoService.getPedido(), HttpStatus.OK);
+    }
 
+    @DeleteMapping("/pedido/fechamento/{idMesa}")
+    public ResponseEntity<String> deleteFechamento(@PathVariable int idMesa) {
+        return new ResponseEntity<>("Pedido da mesa" + idMesa + " fechou com R$ " + this.pedidoService.fechamento(idMesa), HttpStatus.OK);
+    }
+
+    @GetMapping("/pedido/caixa")
+    public ResponseEntity<String> getCaixa(){
+        return new ResponseEntity<String>("O fechando do dia "+ LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " foi de R$"+pedidoService.caixa(), HttpStatus.OK);
+    }
 
 }

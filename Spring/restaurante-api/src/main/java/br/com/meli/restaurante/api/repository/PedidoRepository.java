@@ -93,17 +93,12 @@ public class PedidoRepository {
 
     public static double calcValorTotal(List<Prato> pratos){
         double valorTotal = pratos.stream().mapToDouble(prato -> prato.getQuantidade() * prato.getPreco()).sum();
-
         return valorTotal;
     }
 
-//    public Pedido updatePedido(String pedidoId, Pedido pedido ){
-//        Optional<Pedido> pedidoOptional = pedidos.stream().filter(i -> i.getId() == pedidoId).findFirst();
-//        Pedido produtoFromDB = pedidos.get(pedidoId);
-//        produtoFromDB.setMesa(pedido.getMesa());
-//        produtoFromDB.setPreco(pedido.getPreco());
-//        return produtoFromDB;
-//    }
-
+    public void deleteMesa(int mesaId){
+        Optional<Pedido> pedidoOptional = pedidos.stream().filter(m -> m.getMesa().getId() == mesaId ).findFirst();
+        pedidos.remove(pedidoOptional.orElse(null));
+    }
 
 }

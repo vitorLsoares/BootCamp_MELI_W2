@@ -44,16 +44,20 @@ public class PedidoService implements PedidoServiceInter{
         return pedidoRepository.getPedido(mesaId);
     }
 
+    public double fechamento(int mesaId){
+        pedidoRepository.getPedido(mesaId).setStatus(false);
+        double valorFechamento = pedidoRepository.getPedido(mesaId).getValorTotal();
+        return valorFechamento;
+    }
+
+    public Double caixa(){
+        return pedidoRepository.getPedidos().stream().mapToDouble(value -> value.getValorTotal()).sum();
+    }
+
     @Override
     public Pedido addorUpdatePrato(int mesaId, int idPrato, int quantidade){
         return pedidoRepository.addPrato(mesaId, idPrato, quantidade);
     }
-
-
-//    @Override
-//    public Pedido getPedido(Mesa mesa) {
-//        return pedidoRepository.getPedido(mesa);
-//    }
 
     @Override
     public Pedido updatePedido(String pedidoId, Pedido prato) {
