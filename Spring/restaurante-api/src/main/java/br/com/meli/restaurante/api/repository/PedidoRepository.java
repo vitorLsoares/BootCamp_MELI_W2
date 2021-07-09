@@ -7,7 +7,6 @@ import br.com.meli.restaurante.api.model.Prato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class PedidoRepository {
                 0.0,
                 true
         );
-        this.pedidos.add(creatorPedido);
+        pedidos.add(creatorPedido);
         return creatorPedido;
     }
 
@@ -55,7 +54,7 @@ public class PedidoRepository {
                 0.0,
                 true
         );
-        this.pedidos.add(creatorPedido);
+        pedidos.add(creatorPedido);
         return creatorPedido;
     }
 
@@ -92,13 +91,11 @@ public class PedidoRepository {
     }
 
     public static double calcValorTotal(List<Prato> pratos){
-        double valorTotal = pratos.stream().mapToDouble(prato -> prato.getQuantidade() * prato.getPreco()).sum();
-        return valorTotal;
+        return pratos.stream().mapToDouble(prato -> prato.getQuantidade() * prato.getPreco()).sum();
     }
 
     public void deleteMesa(int mesaId){
         Optional<Pedido> pedidoOptional = pedidos.stream().filter(m -> m.getMesa().getId() == mesaId ).findFirst();
         pedidos.remove(pedidoOptional.orElse(null));
     }
-
 }
