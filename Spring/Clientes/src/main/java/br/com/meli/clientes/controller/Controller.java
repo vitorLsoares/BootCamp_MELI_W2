@@ -28,7 +28,7 @@ public class Controller {
         return new ResponseEntity<Cliente>(cliente,HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/pedidos")
+    @PostMapping("/{id}/pedidos")
     public ResponseEntity<List<Cliente>> updatePedidosById(@PathVariable long id, @Validated @RequestBody Pedido pedido, UriComponentsBuilder uriBuilder){
         List<Cliente> client = clientService.updatePedido(id, pedido);
         URI uri = uriBuilder.path("/pedidos/{id}").buildAndExpand(id).toUri();

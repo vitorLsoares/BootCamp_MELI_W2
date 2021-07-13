@@ -51,7 +51,7 @@ public class PedidoService implements PedidoServiceInter{
     }
 
     public Double caixa(){
-        return pedidoRepository.getPedidos().stream().mapToDouble(value -> value.getValorTotal()).sum();
+        return pedidoRepository.getPedidos().stream().mapToDouble(Pedido::getValorTotal).sum();
     }
 
     @Override

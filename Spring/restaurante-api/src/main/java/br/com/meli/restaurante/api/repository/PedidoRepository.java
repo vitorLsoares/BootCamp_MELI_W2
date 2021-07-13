@@ -1,6 +1,5 @@
 package br.com.meli.restaurante.api.repository;
 
-
 import br.com.meli.restaurante.api.model.Mesa;
 import br.com.meli.restaurante.api.model.Pedido;
 import br.com.meli.restaurante.api.model.Prato;
@@ -36,6 +35,7 @@ public class PedidoRepository {
                 0.0,
                 true
         );
+
         pedidos.add(creatorPedido);
         return creatorPedido;
     }
@@ -98,4 +98,7 @@ public class PedidoRepository {
         Optional<Pedido> pedidoOptional = pedidos.stream().filter(m -> m.getMesa().getId() == mesaId ).findFirst();
         pedidos.remove(pedidoOptional.orElse(null));
     }
+
+
+
 }
