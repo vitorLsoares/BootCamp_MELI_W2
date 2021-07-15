@@ -31,9 +31,7 @@ public class StudentDTO {
         return student;
     }
 
-    public static StudentDTO convertModelToDTO(Student student){
-        String defaultMessage = "Sua média foi de ";
-        double calculoDaMedia = student.getSubjects().stream().mapToDouble(Subject::getNote).sum()/student.getSubjects().size();
-        return new StudentDTO(defaultMessage +calculoDaMedia,calculoDaMedia,student);
+    public static StudentDTO convertModelToDTO(Student student , double calculoDaMedia , String defaultMessage){
+        return new StudentDTO(defaultMessage ,calculoDaMedia,student);
     }
 }
