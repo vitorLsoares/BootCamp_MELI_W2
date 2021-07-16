@@ -4,14 +4,17 @@ import br.com.meli.obter.diploma.dto.StudentDTO;
 import br.com.meli.obter.diploma.model.Student;
 import br.com.meli.obter.diploma.model.Subject;
 import br.com.meli.obter.diploma.repository.StudentRepository;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Stubber;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +23,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@RunWith(SpringRunner.class)
 class StudentServiceTest {
 
-    @Autowired
     StudentService studentService;
+
+    @Mock
+    StudentRepository studentRepository;
+
+    @BeforeEach
+    public void initSetup(){
+        studentService = new StudentService(studentRepository);
+    }
 
     @Test
     void shoulGetListOfStudent() {
@@ -46,22 +57,19 @@ class StudentServiceTest {
                 )
         );
         Student student2 = new Student("Leandro de Almeida",subjectsS2);
-
         List<Student> listEstudante = new ArrayList<>(Arrays.asList(student2,student));
-
-        StudentService localMockService = Mockito.mock(StudentService.class);
-        Mockito.when(localMockService.getListOfStudent()).thenReturn(listEstudante);
+        Mockito.when(studentRepository.getList()).thenReturn(listEstudante);
 
         //Execução
-        List<Student> saidaDesejada = localMockService.getListOfStudent();
+        List<Student> saidaDesejada = studentService.getListOfStudent();
 
         //Condiçao
-        Assertions.assertEquals(saidaDesejada,listEstudante);
-        Mockito.verify(localMockService).getListOfStudent();
+        Assertions.assertEquals(listEstudante,saidaDesejada);
+        Mockito.verify(studentRepository).getList();
     }
 
     @Test
-    void getStudantByName() {
+    void getStudantByName() throws Exception{
         //Setup
         List<Subject> subjectsS1 = new ArrayList<>(
                 Arrays.asList(
@@ -72,15 +80,25 @@ class StudentServiceTest {
         );
         Student student = new Student("Kamila Albuquerque",subjectsS1);
 
-        StudentService localMockService = Mockito.mock(StudentService.class);
-        Mockito.when(localMockService.getStudantByName("Kamila Albuquerque")).thenReturn(student);
+        List<Subject> subjectsS2 = new ArrayList<>(
+                Arrays.asList(
+                        new Subject("Matematica",9.5),
+                        new Subject("Fisica",8.5),
+                        new Subject("Quimica",9.0)
+
+                )
+        );
+        Student student2 = new Student("Leandro de Almeida",subjectsS2);
+        List<Student> listEstudante = new ArrayList<>(Arrays.asList(student2,student));
+        Mockito.when(studentRepository.getList()).thenReturn(listEstudante);
 
         //Execução
-        Student saidaDesejada = localMockService.getStudantByName("Kamila Albuquerque");
+        Student saidaDesejada = studentService.getStudantByName("Kamila Albuquerque");
 
         //Condiçao
-        Assertions.assertEquals(saidaDesejada,student);
-        Mockito.verify(localMockService).getStudantByName("Kamila Albuquerque");
+        Assertions.assertEquals(student,saidaDesejada);
+        Mockito.verify(studentRepository).getList();
+
     }
 
     @Test
@@ -94,16 +112,14 @@ class StudentServiceTest {
                 )
         );
         Student student = new Student("Kamila Albuquerque",subjectsS1);
-
-        StudentService localMockService = Mockito.mock(StudentService.class);
-        Mockito.when(localMockService.createStudent(student)).thenReturn(student);
+        Mockito.doNothing().when(studentRepository).add(student);
 
         //Execução
-        Student saidaDesejada = localMockService.createStudent(student);
+        Student saidaDesejada = studentService.createStudent(student);
 
         //Condiçao
         Assertions.assertEquals(saidaDesejada,student);
-        Mockito.verify(localMockService).createStudent(student);
+        Mockito.verify(studentRepository).add(student);
     }
 
     @Test

@@ -12,9 +12,10 @@ import java.util.List;
 
 @Service
 public class StudentService{
-    @Autowired
+
     StudentRepository studentRepository;
 
+    @Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }

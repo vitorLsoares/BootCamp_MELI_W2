@@ -18,6 +18,8 @@ public class Student {
 
     private List<@Valid Subject> subjects;
 
+
+
     public Student(String nome, List<Subject> subjects) {
         this.nome = nome;
         this.subjects = subjects;
