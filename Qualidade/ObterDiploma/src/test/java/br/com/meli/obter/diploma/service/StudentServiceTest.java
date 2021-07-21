@@ -4,15 +4,12 @@ import br.com.meli.obter.diploma.dto.StudentDTO;
 import br.com.meli.obter.diploma.model.Student;
 import br.com.meli.obter.diploma.model.Subject;
 import br.com.meli.obter.diploma.repository.StudentRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Stubber;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
