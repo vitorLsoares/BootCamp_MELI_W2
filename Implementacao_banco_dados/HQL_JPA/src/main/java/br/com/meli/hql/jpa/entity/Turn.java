@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
+@Data
 public class Turn {
 
     @Id
